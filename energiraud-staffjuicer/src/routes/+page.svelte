@@ -19,16 +19,12 @@
 	 */
 	onMount(async () => {
 		if (!("NDEFReader" in window)) {
-      dash_message = "NFC non supporté";
       return;
     }
 
 		try {
-			dash_message += "\nInitialisation...";
 			const ndef = new NDEFReader();
-			dash_message += "\nnew NDEFReader";
 			await ndef.scan();
-			dash_message += "\nscan";
 
 			ndef.onreading = async (event) => {
 				const decoder = new TextDecoder();
@@ -36,7 +32,6 @@
 				rfid_id = tagData;
 				await loadPage();
 			};
-			dash_message += "\nonreading";
 
     } catch (err) {
 			dash_message += "\nErreur lors de l'activation du NFC, " + err;
