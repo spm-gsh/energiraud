@@ -1,0 +1,11 @@
+@font-face {
+  font-family: nunito;
+  src: url("Nunito.ttf") format("opentype");
+}
+
+html, body {
+  margin: 0;
+  font-family: nunito;
+  -webkit-font-smoothing: antialiased;
+  scroll-behavior: smooth;
+}
