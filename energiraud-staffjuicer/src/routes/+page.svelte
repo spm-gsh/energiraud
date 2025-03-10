@@ -24,15 +24,12 @@
 
 		try {
 			const ndef = new NDEFReader();
-			await ndef.scan();
-
-			ndef.onreading = async (event) => {
-				const decoder = new TextDecoder();
-				const tagData = event.message.records.map(record => decoder.decode(record.data)).join(", ");
-				rfid_id = tagData;
-				await loadPage();
-			};
-
+			ndef.scan().then(() => {
+				ndef.onreading = async ({message, serialNumber}) => {
+					rfid_id = serialNumber;
+					await loadPage();
+				};
+			});
     } catch (err) {
 			dash_message += "\nErreur lors de l'activation du NFC, " + err;
     }
