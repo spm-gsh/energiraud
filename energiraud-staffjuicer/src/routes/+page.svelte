@@ -35,7 +35,7 @@
       };
     } catch (error) {
       console.error("Erreur NFC:", error);
-      dash_message = "Erreur lors de la lecture NFC";
+      dash_message = "Erreur lors de la lecture NFC: " + error;
     }
   }
 
