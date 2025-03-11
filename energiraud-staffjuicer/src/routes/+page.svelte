@@ -201,6 +201,12 @@
 		margin: 0.5rem 0;
 	}
 
+	.info-text-title {
+		color: var(--text-light);
+		font-weight: 600;
+		margin: 0.5rem 0;
+	}
+
 	.balance {
 		font-size: 1.5rem;
 		font-weight: 600;
@@ -368,8 +374,10 @@
 				<BalanceValidity bind:balance_validity={balanceValidity} />
 			</div>
 			<div>
-				<p class="info-text">Titulaire: {accountInfo.name}</p>
-				<p class="info-text">Numéro de compte: {accountInfo.ntag}</p>
+				<p class="info-text-title">Titulaire:</p>
+				<p class="info-text">{accountInfo.name}</p>
+				<p class="info-text-title">Numéro de compte: </p>
+				<p class="info-text">{accountInfo.ntag}</p>
 				<p class="balance">Solde: {accountInfo.balance}€</p>
 			</div>
 		</div>
