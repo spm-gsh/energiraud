@@ -24,14 +24,21 @@
     }
 
     try {
+			const abortController = new AbortController();
+			abortController.signal.onabort = event => {
+				dash_message = "Scan annulé";
+			};
+
       ndefReader = new NDEFReader();
-      await ndefReader.scan();
+      await ndefReader.scan({ signal: abortController.signal });
       isListening = true;
 
       ndefReader.onreading = async ({data, serialNumber}) => {
         rfid_id = serialNumber;
 				alert(rfid_id);
         await loadPage();
+				abortController.abort();
+				isListening = false;
       };
     } catch (error) {
       console.error("Erreur NFC:", error);
