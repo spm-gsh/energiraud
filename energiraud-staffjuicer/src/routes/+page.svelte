@@ -40,13 +40,6 @@
   }
 
 	/**
-	 * Fetch the account info
-	 */
-	onMount(async () => {
-		startListening();
-	});
-
-	/**
 	 * Load the page
 	 */
 	async function loadPage() {
@@ -425,6 +418,9 @@
 		<div class="card">
 			<h2 class="card-title">En attente de scan</h2>
 			<p class="info-text">Scannez une carte pour accéder aux informations du compte.</p>
+			<button class="button" onclick={startListening}>
+				Scanner
+			</button>
 		</div>
 	</div>
 	{/if}
