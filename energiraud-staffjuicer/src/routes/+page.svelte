@@ -14,25 +14,33 @@
 	let dash_message = $state("");
 	let ndef = $state(null);
 
+	async function startListening() {
+    if (!("NDEFReader" in window)) {
+      dash_message = "Votre navigateur ne prend pas en charge le NFC";
+      return;
+    }
+
+    try {
+      ndefReader = new NDEFReader();
+      await ndefReader.scan();
+      isListening = true;
+
+      ndefReader.onreading = (data, serialNumber) => {
+        const decoder = new TextDecoder();
+        rfid_id = serialNumber;
+        loadPage();
+      };
+    } catch (error) {
+      console.error("Erreur NFC:", error);
+      dash_message = "Erreur lors de la lecture NFC";
+    }
+  }
+
 	/**
 	 * Fetch the account info
 	 */
 	onMount(async () => {
-		if (!("NDEFReader" in window)) {
-      return;
-    }
-
-		try {
-			const ndef = new NDEFReader();
-			ndef.scan().then(() => {
-				ndef.onreading = async ({message, serialNumber}) => {
-					rfid_id = serialNumber;
-					await loadPage();
-				};
-			});
-    } catch (err) {
-			dash_message += "\nErreur lors de l'activation du NFC, " + err;
-    }
+		startListening();
 	});
 
 	/**
