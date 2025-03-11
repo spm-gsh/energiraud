@@ -65,7 +65,6 @@
 	async function fetchAccountInfo() {
 		try {
 			const build_url = `${PUBLIC_API_URL}/api/accounts/${rfid_id}`;
-			alert(PUBLIC_KEY);
 			const response = await fetch(build_url, {
 				headers: {
 					"Authorization": `${PUBLIC_KEY}`
