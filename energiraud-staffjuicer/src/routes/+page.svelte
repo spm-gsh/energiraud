@@ -16,7 +16,7 @@
 
 	let isListening = $state(false);
 	let ndefReader = $state(null);
-
+	let abortController = $state(null);
 	async function startListening() {
     if (!("NDEFReader" in window)) {
       dash_message = "Votre navigateur ne prend pas en charge le NFC";
@@ -24,7 +24,7 @@
     }
 
     try {
-			const abortController = new AbortController();
+			abortController = new AbortController();
 			abortController.signal.onabort = event => {
 				dash_message = "Scan annulé";
 			};
@@ -47,7 +47,7 @@
   }
 
 	async function stopListening() {
-		await ndefReader.abort();
+		abortController.abort();
 		isListening = false;
 		dash_message = "Scannez une carte pour accéder aux informations du compte.";
 	}
