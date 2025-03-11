@@ -40,7 +40,7 @@
   }
 
 	async function stopListening() {
-		await ndefReader.cancel();
+		await ndefReader.abort();
 		isListening = false;
 		dash_message = "Scannez une carte pour accéder aux informations du compte.";
 	}
