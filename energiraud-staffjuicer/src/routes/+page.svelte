@@ -17,6 +17,7 @@
 	let isListening = $state(false);
 	let ndefReader = $state(null);
 	let abortController = $state(null);
+
 	async function startListening() {
 		dash_message = "Scan en cours...";
     if (!("NDEFReader" in window)) {
@@ -63,7 +64,9 @@
 	 */
 	async function fetchAccountInfo() {
 		try {
-			const response = await fetch(`${PUBLIC_API_URL}/api/accounts/${rfid_id}`, {
+			const build_url = `${PUBLIC_API_URL}/api/accounts/${rfid_id}`;
+			alert(build_url);
+			const response = await fetch(build_url, {
 				headers: {
 					"Authorization": `${PUBLIC_KEY}`
 				}
