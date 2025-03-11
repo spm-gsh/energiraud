@@ -111,25 +111,29 @@
 	async function handleRecharge() {
 		error = null;
 		success = null;
-		if (rechargeAmount > 0) {	
-			const response = await fetch(`${PUBLIC_API_URL}/api/refil`, {
-				method: "POST",
-				headers: {
-					"Authorization": `${PUBLIC_KEY}`
-				},
-				body: JSON.stringify({ 
-					ntag: rfid_id, 
-					amount: rechargeAmount,
-					description: "Recharge manuelle"
-				})
-			});
-			if (response.ok) {
-				success = `Compte rechargé avec succès de ${rechargeAmount}€`;
-				rechargeAmount = 0;
-				await loadPage();
-			} else {
-				error = "Erreur lors du rechargement du compte";
+		try {
+			if (rechargeAmount > 0) {	
+				const response = await fetch(`${PUBLIC_API_URL}/api/refil`, {
+					method: "POST",
+					headers: {
+						"Authorization": `${PUBLIC_KEY}`
+					},
+					body: JSON.stringify({ 
+						ntag: rfid_id, 
+						amount: rechargeAmount,
+						description: "Recharge manuelle"
+					})
+				});
+				if (response.ok) {
+					success = `Compte rechargé avec succès de ${rechargeAmount}€`;
+					rechargeAmount = 0;
+					await loadPage();
+				} else {
+					error = "Erreur lors du rechargement du compte";
+				}
 			}
+		} catch (error) {
+			alert(error);
 		}
 	}
 </script>
