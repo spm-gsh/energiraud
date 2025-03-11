@@ -57,7 +57,6 @@
 	async function loadPage() {
 		alert('loadPage ' + rfid_id);
 		await fetchAccountInfo();
-		alert('fetchAccountInfo ' + accountInfo);
 		await fetchBalanceValidity();
 	}
 
@@ -70,8 +69,9 @@
 				"Authorization": `${PUBLIC_KEY}`
 			}
 		});
+		const data = await response.json();
+		alert('fetchAccountInfo ' + data);
 		if (response.ok) {
-			const data = await response.json();
 			accountInfo = data.data;
 			transactions = accountInfo.transactions;
 		} else {
