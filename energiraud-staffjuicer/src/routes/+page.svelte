@@ -62,13 +62,13 @@
 	 * Fetch the account info
 	 */
 	async function fetchAccountInfo() {
+		alert('fetchAccountInfo ');
 		const response = await fetch(`${PUBLIC_API_URL}/api/accounts/${rfid_id}`, {
 			headers: {
 				"Authorization": `${PUBLIC_KEY}`
 			}
 		});
 		const data = await response.json();
-		alert('fetchAccountInfo ' + data);
 		if (response.ok) {
 			accountInfo = data.data;
 			transactions = accountInfo.transactions;
