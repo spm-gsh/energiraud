@@ -62,38 +62,44 @@
 	 * Fetch the account info
 	 */
 	async function fetchAccountInfo() {
-		alert('fetchAccountInfo ');
-		const response = await fetch(`${PUBLIC_API_URL}/api/accounts/${rfid_id}`, {
-			headers: {
-				"Authorization": `${PUBLIC_KEY}`
+		try {
+			const response = await fetch(`${PUBLIC_API_URL}/api/accounts/${rfid_id}`, {
+				headers: {
+					"Authorization": `${PUBLIC_KEY}`
+				}
+			});
+			const data = await response.json();
+			if (response.ok) {
+				accountInfo = data.data;
+				transactions = accountInfo.transactions;
+			} else {
+				alert("Erreur lors de la récupération des informations du compte");
 			}
-		});
-		const data = await response.json();
-		if (response.ok) {
-			accountInfo = data.data;
-			transactions = accountInfo.transactions;
-		} else {
-			error = "Erreur lors de la récupération des informations du compte";
-		}
+		} catch (error) {
+			alert(error);
+		}	
 	}
 
 	/**
 	 * Fetch the transactions
 	 */
 	async function fetchBalanceValidity() {
-		error = null;
-		const response = await fetch(`${PUBLIC_API_URL}/api/verify/${rfid_id}`, {
-			headers: {
-				"Authorization": `${PUBLIC_KEY}`
+		try {
+			const response = await fetch(`${PUBLIC_API_URL}/api/verify/${rfid_id}`, {
+					headers: {
+						"Authorization": `${PUBLIC_KEY}`
+				}
+			});
+			if (response.ok) {
+				const data = await response.json();
+				const balance_data = data.data;
+				balanceValidity = balance_data.is_verified;
+				console.log(balanceValidity);
+			} else {
+				alert("Erreur lors de la récupération de la validité du solde");
 			}
-		});
-		if (response.ok) {
-			const data = await response.json();
-			const balance_data = data.data;
-			balanceValidity = balance_data.is_verified;
-			console.log(balanceValidity);
-		} else {
-			error = "Erreur lors de la récupération de la validité du solde";
+		} catch (error) {
+			alert(error);
 		}
 	}
 
