@@ -71,7 +71,6 @@
 				}
 			});
 			const data = await response.json();
-			alert(data);
 			if (response.ok) {
 				accountInfo = data.data;
 				transactions = accountInfo.transactions;
