@@ -38,8 +38,7 @@
         rfid_id = serialNumber;
 				alert(rfid_id);
         await loadPage();
-				abortController.abort();
-				isListening = false;
+				await stopListening();
       };
     } catch (error) {
       dash_message = "Erreur lors de la lecture NFC: " + error;
