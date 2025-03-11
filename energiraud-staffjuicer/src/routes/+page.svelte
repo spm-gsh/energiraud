@@ -56,7 +56,7 @@
 	 * Load the page
 	 */
 	async function loadPage() {
-		alert('loadPage', rfid_id);
+		alert('loadPage ' + rfid_id);
 		await fetchAccountInfo();
 		await fetchBalanceValidity();
 	}
