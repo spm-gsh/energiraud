@@ -29,8 +29,8 @@
       isListening = true;
 
       ndefReader.onreading = async ({data, serialNumber}) => {
-        const decoder = new TextDecoder();
         rfid_id = serialNumber;
+				alert(rfid_id);
         await loadPage();
       };
     } catch (error) {
