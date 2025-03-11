@@ -28,7 +28,7 @@
     try {
 			abortController = new AbortController();
 			abortController.signal.onabort = event => {
-				dash_message = "Scan annulé";
+				// Anything
 			};
 
       ndefReader = new NDEFReader();
