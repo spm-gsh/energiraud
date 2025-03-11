@@ -242,36 +242,40 @@
 		opacity: 0.9;
 	}
 
-	.table-container {
-		overflow-x: auto;
+	.transaction-list {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
 	}
 
-	table {
-		width: 100%;
-		border-collapse: collapse;
-	}
-
-	th {
-		text-align: left;
-		padding: 1rem;
-		color: var(--text-light);
-		border-bottom: 2px solid var(--border-color);
-	}
-
-	td {
+	.transaction-item {
 		padding: 1rem;
 		border-bottom: 1px solid var(--border-color);
-		color: var(--text-light);
 	}
 
-	tr:hover {
-		background-color: var(--hover-bg);
+	.transaction-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 0.5rem;
+	}
+
+	.transaction-date {
+		color: var(--text-light);
+		font-size: 0.9rem;
+	}
+
+	.transaction-description {
+		color: var(--text-color);
+		font-size: 0.9rem;
+		text-align: left;
 	}
 
 	.amount-badge {
 		padding: 0.25rem 0.75rem;
 		border-radius: 4px;
 		display: inline-block;
+		font-weight: 500;
 	}
 
 	.amount-positive {
@@ -401,29 +405,20 @@
 
 	<div class="card">
 		<h2 class="card-title">Dernières transactions</h2>
-		<div class="table-container">
-			<table>
-				<thead>
-					<tr>
-						<th>Date</th>
-						<th>Description</th>
-						<th style="text-align: right;">Montant</th>
-					</tr>
-				</thead>
-				<tbody>
-					{#each transactions as transaction}
-						<tr>
-							<td>{new Date(transaction.created_at).toLocaleDateString('fr-FR', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' })}</td>
-							<td>{transaction.description}</td>
-							<td style="text-align: right;">
-								<span class="amount-badge {transaction.amount > 0 ? 'amount-positive' : 'amount-negative'}">
-									{transaction.amount > 0 ? '+' : '-'}{Math.abs(transaction.amount)}€
-								</span>
-							</td>
-						</tr>
-					{/each}
-				</tbody>
-			</table>
+		<div class="transaction-list">
+			{#each transactions as transaction}
+				<div class="transaction-item">
+					<div class="transaction-header">
+						<span class="transaction-date">
+							{new Date(transaction.created_at).toLocaleDateString('fr-FR', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' })}
+						</span>
+						<span class="amount-badge {transaction.amount > 0 ? 'amount-positive' : 'amount-negative'}">
+							{transaction.amount > 0 ? '+' : '-'}{Math.abs(transaction.amount)}€
+						</span>
+					</div>
+					<p class="transaction-description">{transaction.description}</p>
+				</div>
+			{/each}
 		</div>
 	</div>
 	</div>
@@ -462,4 +457,3 @@
 		</div>
 	</div>
 {/if}
-
