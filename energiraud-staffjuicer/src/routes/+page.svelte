@@ -48,7 +48,6 @@
 	async function stopListening() {
 		abortController.abort();
 		isListening = false;
-		dash_message = "Lancez le scan pour accéder aux informations du compte.";
 	}
 
 	/**
