@@ -118,6 +118,7 @@
 				const response = await fetch(`${PUBLIC_API_URL}/api/refil`, {
 					method: "POST",
 					headers: {
+						"Content-Type": "application/json",
 						"Authorization": `${PUBLIC_KEY}`
 					},
 					body: JSON.stringify({ 
