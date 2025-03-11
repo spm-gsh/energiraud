@@ -14,6 +14,9 @@
 	let dash_message = $state("");
 	let ndef = $state(null);
 
+	let isListening = $state(false);
+	let ndefReader = $state(null);
+
 	async function startListening() {
     if (!("NDEFReader" in window)) {
       dash_message = "Votre navigateur ne prend pas en charge le NFC";
