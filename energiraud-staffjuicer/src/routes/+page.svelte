@@ -11,7 +11,7 @@
 	let success = $state(null);
 	let transactions = $state([])
 	let balanceValidity = $state(null);
-	let dash_message = $state("");
+	let dash_message = $state("Scannez une carte pour accéder aux informations du compte.");
 	let ndef = $state(null);
 
 	let isListening = $state(false);
@@ -28,16 +28,22 @@
       await ndefReader.scan();
       isListening = true;
 
-      ndefReader.onreading = async ({data, serialNumber}) => {
+      ndefReader.onreading = ({data, serialNumber}) => {
         rfid_id = serialNumber;
 				alert(rfid_id);
-        await loadPage();
+        loadPage();
       };
     } catch (error) {
       console.error("Erreur NFC:", error);
       dash_message = "Erreur lors de la lecture NFC: " + error;
     }
   }
+
+	async function stopListening() {
+		await ndefReader.cancel();
+		isListening = false;
+		dash_message = "Scannez une carte pour accéder aux informations du compte.";
+	}
 
 	/**
 	 * Load the page
@@ -404,31 +410,32 @@
 		J'ai terminé !
 	</button>
 {:else}
-<h2 class="before-scan-title">Staff Juicer</h2>
-<div class="logo-container">
-	<img src="/favicon.png" alt="Staff Juicer" class="logo">
-</div>
-{#if dash_message}
+	<h2 class="before-scan-title">Staff Juicer</h2>
+	<div class="logo-container">
+		<img src="/favicon.png" alt="Staff Juicer" class="logo">
+	</div>
 	<div class="before-scan-container">
 		<div class="card">
+			<h2 class="card-title">StaffJuicer</h2>
 			<p class="info-text">{dash_message}</p>
+			{#if isListening}
+				<button class="button" onclick={
+					() => {
+						stopListening();
+					}
+				}>
+					Arrêter le scan
+				</button>
+			{:else}
+				<button class="button" onclick={
+					() => {
+						startListening();
+					}
+				}>
+					Scanner
+				</button>
+			{/if}
 		</div>
 	</div>
-{:else}
-	<div class="before-scan-container">
-		<div class="card">
-			<h2 class="card-title">En attente de scan</h2>
-			<p class="info-text">Scannez une carte pour accéder aux informations du compte.</p>
-			<button class="button" onclick={
-				() => {
-					startListening();
-					dash_message = "Scan en cours...";
-				}
-			}>
-				Scanner
-			</button>
-		</div>
-	</div>
-	{/if}
 {/if}
 
