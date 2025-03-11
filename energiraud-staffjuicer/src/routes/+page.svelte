@@ -31,6 +31,7 @@
       ndefReader.onreading = (data, serialNumber) => {
         const decoder = new TextDecoder();
         rfid_id = serialNumber;
+				alert(rfid_id);
         loadPage();
       };
     } catch (error) {
@@ -418,7 +419,12 @@
 		<div class="card">
 			<h2 class="card-title">En attente de scan</h2>
 			<p class="info-text">Scannez une carte pour accéder aux informations du compte.</p>
-			<button class="button" onclick={startListening}>
+			<button class="button" onclick={
+				() => {
+					startListening();
+					dash_message = "Scan en cours...";
+				}
+			}>
 				Scanner
 			</button>
 		</div>
