@@ -22,8 +22,6 @@
 		dash_message = "Scan en cours, veuillez approcher la carte";
     if (!("NDEFReader" in window)) {
       dash_message = "Votre navigateur ne prend pas en charge le NFC";
-			rfid_id = "04:54:a9:7a:89:5d:80";
-			await loadPage();
       return;
     }
 
