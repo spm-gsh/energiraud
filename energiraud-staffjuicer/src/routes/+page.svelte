@@ -36,7 +36,6 @@
 
       ndefReader.onreading = async ({data, serialNumber}) => {
         rfid_id = serialNumber;
-				alert(rfid_id);
         await loadPage();
 				await stopListening();
       };
@@ -55,7 +54,6 @@
 	 * Load the page
 	 */
 	async function loadPage() {
-		alert('loadPage ' + rfid_id);
 		await fetchAccountInfo();
 		await fetchBalanceValidity();
 	}
