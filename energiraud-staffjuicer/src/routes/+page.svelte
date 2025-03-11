@@ -18,6 +18,7 @@
 	let ndefReader = $state(null);
 	let abortController = $state(null);
 	async function startListening() {
+		dash_message = "Scan en cours...";
     if (!("NDEFReader" in window)) {
       dash_message = "Votre navigateur ne prend pas en charge le NFC";
       return;
@@ -41,7 +42,6 @@
 				isListening = false;
       };
     } catch (error) {
-      console.error("Erreur NFC:", error);
       dash_message = "Erreur lors de la lecture NFC: " + error;
     }
   }
@@ -58,6 +58,7 @@
 	async function loadPage() {
 		alert('loadPage ' + rfid_id);
 		await fetchAccountInfo();
+		alert('fetchAccountInfo ' + accountInfo);
 		await fetchBalanceValidity();
 	}
 
