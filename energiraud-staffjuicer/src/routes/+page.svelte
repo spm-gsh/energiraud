@@ -28,11 +28,10 @@
       await ndefReader.scan();
       isListening = true;
 
-      ndefReader.onreading = ({data, serialNumber}) => {
+      ndefReader.onreading = async ({data, serialNumber}) => {
         const decoder = new TextDecoder();
         rfid_id = serialNumber;
-				alert(rfid_id);
-        loadPage();
+        await loadPage();
       };
     } catch (error) {
       console.error("Erreur NFC:", error);
@@ -46,6 +45,7 @@
 	async function loadPage() {
 		await fetchAccountInfo();
 		await fetchBalanceValidity();
+		alert('loadPage');
 	}
 
 	/**
