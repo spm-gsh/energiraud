@@ -75,7 +75,7 @@
 				accountInfo = data.data;
 				transactions = accountInfo.transactions;
 			} else {
-				alert("Erreur lors de la récupération des informations du compte");
+				dash_message = "Aucun compte trouvé";
 			}
 		} catch (error) {
 			alert(error);
@@ -96,9 +96,8 @@
 				const data = await response.json();
 				const balance_data = data.data;
 				balanceValidity = balance_data.is_verified;
-				console.log(balanceValidity);
 			} else {
-				alert("Erreur lors de la récupération de la validité du solde");
+				dash_message = "Aucune carte valide trouvée";
 			}
 		} catch (error) {
 			alert(error);
