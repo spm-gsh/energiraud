@@ -103,23 +103,18 @@ import { createTransaction } from '$lib/models/transactions';
 
 export async function POST({ request }) {
 
-  const response = new Response();
-  response.headers.set("Access-Control-Allow-Origin", "*");
-  response.headers.set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-  response.headers.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
-
   let { ntag, amount, description } = await request.json()
 
   if (!description) {
-    return json({ statusCode: 400, error: 'Description is required' }, { status: 400, headers: response.headers })
+    return json({ statusCode: 400, error: 'Description is required' }, { status: 400})
   }
 
   if (!ntag) {
-    return json({ statusCode: 400, error: 'Ntag is required' }, { status: 400, headers: response.headers })
+    return json({ statusCode: 400, error: 'Ntag is required' }, { status: 400})
   }
 
   if (!amount) {
-    return json({ statusCode: 400, error: 'Amount is required' }, { status: 400, headers: response.headers })
+    return json({ statusCode: 400, error: 'Amount is required' }, { status: 400})
   }
 
   amount = parseFloat(amount.toFixed(2))
@@ -127,7 +122,7 @@ export async function POST({ request }) {
   // CHECK KEY
   const key = request.headers.get('Authorization')
   if (!checkKey(key)) {
-    return json({ statusCode: 401, error: 'Unauthorized' }, { status: 401, headers: response.headers })
+    return json({ statusCode: 401, error: 'Unauthorized' }, { status: 401})
   }
 
   // CHECK ACCOUNT
@@ -136,14 +131,14 @@ export async function POST({ request }) {
     return json({
       statusCode: 404,
       error: 'Account not found',
-    }, { status: 404, headers: response.headers })
+    }, { status: 404})
   }
 
   if (!account.enabled) {
     return json({
       statusCode: 400,
       error: 'We detected an issue with your account, please contact the support',
-    }, { status: 400, headers: response.headers })
+    }, { status: 400})
   }
 
   // CHECK AMOUNT
@@ -151,7 +146,7 @@ export async function POST({ request }) {
     return json({
       statusCode: 400,
       error: 'Invalid amount',
-    }, { status: 400, headers: response.headers })
+    }, { status: 400})
   }
 
   // UPDATE BALANCE
@@ -168,5 +163,5 @@ export async function POST({ request }) {
   return json({
     statusCode: 200,
     data: account,
-  }, { status: 200, headers: response.headers })
+  }, { status: 200})
 }
