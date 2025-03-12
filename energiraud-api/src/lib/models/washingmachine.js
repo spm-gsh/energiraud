@@ -34,4 +34,4 @@ async function getWashingMachinesPaginated(page, take) {
   return washingMachines;
 }
 
-export { getWashingMachines, getWashingMachineById, getWashingMachineBySerialNumber, getWashingMachinesPaginated };
+export { getWashingMachines, getWashingMachineById, getWashingMachineBySerialNumber, getWashingMachinesPaginated, getWashingMachineFromLocation };
