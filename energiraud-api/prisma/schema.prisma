@@ -39,7 +39,7 @@ model Transaction {
   updated_at DateTime @updatedAt
 }
 
-model WashingMachine {
+model Machine {
   id String @id @default(uuid())
 
   name String
@@ -49,6 +49,8 @@ model WashingMachine {
 
   switch_ip String
   switch_port Int
+
+  location String
 
   enabled Boolean @default(true)
   status String

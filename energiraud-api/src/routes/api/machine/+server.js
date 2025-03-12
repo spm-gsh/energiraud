@@ -119,11 +119,11 @@ export async function GET({ request, url }) {
   }
 
   // GET ALL ACCOUNTS
-  const accounts = await getAccountsPaginated(page, take)
+  const machines = await getWashingMachinesPaginated(page, take)
 
   // RETURN FINAL VALUES
   return json({
     statusCode: 200,
-    data: accounts,
+    data: machines,
   }, { status: 200 })
 }

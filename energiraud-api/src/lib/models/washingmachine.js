@@ -5,6 +5,13 @@ async function getWashingMachines() {
   return washingMachines;
 }
 
+async function getWashingMachineFromLocation(location) {
+  const washingMachine = await db.washingMachine.findMany({
+    where: { location }
+  });
+  return washingMachine;
+}
+
 async function getWashingMachineById(id) {
   const washingMachine = await db.washingMachine.findUnique({
     where: { id }
@@ -19,4 +26,12 @@ async function getWashingMachineBySerialNumber(serialNumber) {
   return washingMachine;
 }
 
-export { getWashingMachines, getWashingMachineById, getWashingMachineBySerialNumber };
+async function getWashingMachinesPaginated(page, take) {
+  const washingMachines = await db.washingMachine.findMany({
+    skip: (page - 1) * take,
+    take
+  });
+  return washingMachines;
+}
+
+export { getWashingMachines, getWashingMachineById, getWashingMachineBySerialNumber, getWashingMachinesPaginated };
