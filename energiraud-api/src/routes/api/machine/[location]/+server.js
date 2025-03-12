@@ -87,8 +87,8 @@ import { json } from '@sveltejs/kit';
 import { checkKey } from '$lib/utils';
 import { getWashingMachineFromLocation } from '$lib/models/washingmachine';
 
-export async function GET({ request, url }) {
-  const location = url.searchParams.get('location')
+export async function GET({ request, params }) {
+  const location = params.location
 
   // CHECK KEY
   const key = request.headers.get('Authorization')
