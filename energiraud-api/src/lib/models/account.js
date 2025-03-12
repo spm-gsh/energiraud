@@ -137,6 +137,41 @@ async function balanceVerification(accountId) {
   };
 }
 
+/**
+ * Create account
+ * @param {string} name 
+ * @param {string} ntag 
+ * @returns {object}
+ */
+async function createAccount(name, ntag) {
+
+  if (!name || !ntag) {
+    throw new Error('Name and ntag are required')
+  }
+
+  if (name.length < 3) {
+    throw new Error('Name must be at least 3 characters')
+  }
+
+  if (ntag.length < 3) {
+    throw new Error('Ntag must be at least 3 characters')
+  }
+
+  // CHECK IF ACCOUNT EXISTS
+  let account = await getAccountByNtag(ntag)
+  if (account) {
+    throw new Error('Account already exists')
+  }
+
+  // CREATE ACCOUNT
+  account = await db.account.create({
+    data: { name, ntag }
+  })
+
+  // RETURN ACCOUNT
+  return account
+}
+
 export { 
   getAccount, 
   updateAccount, 
@@ -144,5 +179,6 @@ export {
   getAccountById, 
   accoutIsEnabled, 
   balanceVerification, 
-  getAccountByNtag 
+  getAccountByNtag,
+  createAccount
 }

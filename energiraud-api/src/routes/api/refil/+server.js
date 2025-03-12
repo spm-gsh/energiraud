@@ -117,6 +117,14 @@ export async function POST({ request }) {
     return json({ statusCode: 400, error: 'Amount is required' }, { status: 400})
   }
 
+  if (amount < 0) {
+    return json({ statusCode: 400, error: 'Amount must be positive' }, { status: 400})
+  }
+
+  if (amount > 100) {
+    return json({ statusCode: 400, error: 'Amount must be less than 100' }, { status: 400})
+  }
+
   amount = parseFloat(amount.toFixed(2))
 
   // CHECK KEY

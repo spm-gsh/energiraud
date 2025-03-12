@@ -38,3 +38,22 @@ model Transaction {
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 }
+
+model WashingMachine {
+  id String @id @default(uuid())
+
+  name String
+  serial_number String @unique
+
+  hourly_price Float
+
+  switch_ip String
+  switch_port Int
+
+  enabled Boolean @default(true)
+  status String
+  available_at DateTime
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
