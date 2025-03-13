@@ -102,7 +102,7 @@ export async function GET({ request, params }) {
   }
 
   // GET MACHINE FROM LOCATION
-  const machines = await getWashingMachineFromLocation(location)
+  const machines = await getMachineFromLocation(location)
 
   // RETURN FINAL VALUES
   return json({

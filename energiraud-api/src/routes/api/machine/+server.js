@@ -119,7 +119,7 @@ export async function GET({ request, url }) {
   }
 
   // GET ALL ACCOUNTS
-  const machines = await getWashingMachinesPaginated(page, take)
+  const machines = await getMachinesPaginated(page, take)
 
   // RETURN FINAL VALUES
   return json({
