@@ -85,7 +85,7 @@
  */
 import { json } from '@sveltejs/kit';
 import { checkKey } from '$lib/utils';
-import { getWashingMachineFromLocation } from '$lib/models/washingmachine';
+import { getWashingMachineFromLocation } from '$lib/models/machine';
 
 export async function GET({ request, params }) {
   const location = params.location
