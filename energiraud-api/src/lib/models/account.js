@@ -32,6 +32,7 @@ async function getAccountById(id) {
         },
         take: 10
       },
+      role: true,
     },
   })
 
@@ -57,6 +58,7 @@ async function getAccountByNtag(ntag) {
         },
         take: 10
       },
+      role: true,
     },
   })
 
@@ -102,7 +104,10 @@ async function updateAccount(ntag, balance) {
 async function getAccountsPaginated(page, take) {
   const accounts = await db.account.findMany({
     skip: (page - 1) * take,
-    take
+    take,
+    include: {
+      role: true,
+    },
   })
   return accounts
 }
@@ -117,6 +122,7 @@ async function balanceVerification(accountId) {
     where: { id: accountId },
     include: {
       transactions: true,
+      role: true,
     },
   });
 
