@@ -209,8 +209,6 @@ export async function GET({ request, url }) {
 export async function POST({ request }) {
   const { name, ntag } = await request.json()
 
-  console.log(name, ntag)
-
   // CHECK KEY
   const key = request.headers.get('Authorization')
   if (!checkKey(key)) {

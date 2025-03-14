@@ -60,11 +60,11 @@ export async function POST({ request }) {
   // De base on lance 2h
   const launch_time = 2;
 
-  if (!ntag) {
+  if (!ntag || ntag === '') {
     return json({ statusCode: 400, error: 'Ntag is required' }, { status: 400})
   }
 
-  if (!machine_id) {
+  if (!machine_id || machine_id === '') {
     return json({ statusCode: 400, error: 'Machine id is required' }, { status: 400})
   }
 
