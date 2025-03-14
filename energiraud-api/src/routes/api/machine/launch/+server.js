@@ -69,14 +69,14 @@ export async function POST({ request }) {
   }
 
   // ##### CHECK MACHINE #####
-  const machine = await checkMachine(machine_id)
+  let machine = await checkMachine(machine_id)
 
   if (!machine) {
     return json({ statusCode: 404, error: 'Machine is not available' }, { status: 404})
   }
 
   // ##### CHECK ACCOUNT #####
-  const account = await checkAccount(ntag)
+  let account = await checkAccount(ntag)
 
   if (!account) {
     return json({ statusCode: 404, error: 'Account error' }, { status: 404})
@@ -92,14 +92,14 @@ export async function POST({ request }) {
   // CREATE TRANSACTION
   await createTransaction(account.id, -cost, 'Utilisation ' + machine.name + ' (' + launch_time + 'h)')
 
-  await updateAccount(ntag, account.balance - cost)
+  account = await updateAccount(ntag, account.balance - cost)
 
   // UPDATE MACHINE
-  const return_machine = await updateMachine(machine.id, { status: 'En cours', available_at: new Date(Date.now() + launch_time * 60 * 60 * 1000) })
+  machine = await updateMachine(machine.id, { status: 'En cours', available_at: new Date(Date.now() + launch_time * 60 * 60 * 1000) })
 
   // RETURN FINAL VALUES
   return json({
     statusCode: 200,
-    data: { machine: return_machine, account },
+    data: { machine, account },
   }, { status: 200})
 }
