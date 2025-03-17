@@ -4,9 +4,14 @@ import { getAccountById } from '$lib/models/account';
 import { toggleOn, toggleOff } from '$lib/models/circuit_manager';
 
 export async function POST({ request }) {
-  const { user_id,machine_id, enabled } = await request.json();
+  const { user_id, machine_id } = await request.json();
 
-  if (!machine_id || !enabled || !user_id) {
+  const key = request.headers.get('Authorization')
+  if (!checkKey(key)) {
+    return json({ statusCode: 401, error: 'Unauthorized' }, { status: 401 })
+  }
+
+  if (!machine_id || !user_id) {
     return json({ error: 'Machine ID and enabled are required' }, { status: 400 });
   }
 

@@ -6,6 +6,11 @@ import { toggleOff } from '$lib/models/circuit_manager';
 export async function POST({ request }) {
   const { user_id, machine_id } = await request.json();
 
+  const key = request.headers.get('Authorization')
+  if (!checkKey(key)) {
+    return json({ statusCode: 401, error: 'Unauthorized' }, { status: 401 })
+  }
+
   if (!machine_id || !user_id) {
     return json({ error: 'Machine ID is required' }, { status: 400 });
   }
