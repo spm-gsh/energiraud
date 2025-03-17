@@ -157,7 +157,10 @@ export async function POST({ request }) {
   }
 
   // UPDATE BALANCE
-  const new_amount = parseFloat((account.balance - amount)).toFixed(2);
+  const balance = parseFloat(account.balance)
+  amount = parseFloat(amount)
+  let new_amount = Number.parseFloat(balance - amount).toFixed(2);
+  new_amount = parseFloat(new_amount)
 
   await updateAccount(ntag, new_amount)
 
