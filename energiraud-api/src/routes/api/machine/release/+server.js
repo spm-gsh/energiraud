@@ -49,7 +49,7 @@ export async function POST({ request }) {
   }
 
   // UPDATE MACHINE
-  const return_machine = await updateMachine(machine_id, { status: 'En attente' })
+  const return_machine = await updateMachine(machine_id, { status: 'Disponible' })
 
   // RETURN FINAL VALUES
   return json({

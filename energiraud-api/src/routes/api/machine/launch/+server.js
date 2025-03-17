@@ -19,7 +19,7 @@ async function checkMachine(machine_id) {
   if (!machine) { return false }
   if (!machine.enabled) { return false }
   if (machine.available_at && machine.available_at > new Date()) { return false }
-  if (machine.status !== '' && machine.status !== 'En attente') { return false }
+  if (machine.status !== '' && machine.status !== 'Disponible') { return false }
 
   return machine
 }
