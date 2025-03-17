@@ -116,7 +116,7 @@ export async function POST({ request }) {
     return json({ statusCode: 400, error: 'Amount is required' }, { status: 400 })
   }
 
-  amount = parseFloat(amount).toFixed(2)
+  amount = parseFloat(amount).toFixed(2);
 
   // CHECK KEY
   const key = request.headers.get('Authorization')
@@ -157,7 +157,7 @@ export async function POST({ request }) {
   }
 
   // UPDATE BALANCE
-  const new_amount = parseFloat((account.balance - amount).toFixed(2));
+  const new_amount = parseFloat((account.balance - amount)).toFixed(2);
 
   await updateAccount(ntag, new_amount)
 
