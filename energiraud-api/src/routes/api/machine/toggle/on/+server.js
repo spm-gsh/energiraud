@@ -22,7 +22,7 @@ export async function POST({ request }) {
     return json({ error: 'Error, contact support' }, { status: 404 });
   }
 
-  if (account.role !== 'ADMIN') {
+  if (account.role.name !== 'ADMIN') {
     return json({ error: 'Error, contact support' }, { status: 404 });
   }
 

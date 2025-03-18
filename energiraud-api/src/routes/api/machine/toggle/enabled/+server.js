@@ -18,11 +18,13 @@ export async function POST({ request }) {
 
   const account = await getAccountById(user_id);
 
+  console.log(account);
+
   if (!account) {
     return json({ error: 'Error, contact support' }, { status: 404 });
   }
 
-  if (account.role !== 'ADMIN') {
+  if (account.role.name !== 'ADMIN') {
     return json({ error: 'Error, contact support' }, { status: 404 });
   }
 
