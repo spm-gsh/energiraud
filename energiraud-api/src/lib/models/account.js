@@ -132,8 +132,8 @@ async function balanceVerification(accountId) {
 
   const calculatedBalance = parseFloat(account.transactions.reduce((sum, transaction) => sum + transaction.amount, 0)).toFixed(2);
 
-  console.log(account.balance)
-  console.log(calculatedBalance)
+  account.balance = parseFloat(account.balance).toFixed(2)
+  calculatedBalance = parseFloat(calculatedBalance).toFixed(2)
 
   const isVerified = account.balance === calculatedBalance;
 
