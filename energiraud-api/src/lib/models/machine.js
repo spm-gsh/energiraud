@@ -9,7 +9,11 @@ async function getMachineFromLocation(location) {
   const washingMachine = await db.machine.findMany({
     where: { location },
     include: {
-      logs: true
+      logs: {
+        include: {
+          account: true
+        }
+      }
     }
   });
   return washingMachine;
@@ -68,7 +72,6 @@ async function getMachineHistory(machine_id) {
   });
   return machine;
 }
-
 
 export { 
   getMachines, 
