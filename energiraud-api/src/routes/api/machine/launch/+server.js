@@ -30,14 +30,26 @@ async function checkMachine(machine_id) {
  * @returns {object} - The account
  */
 async function checkAccount(ntag) {
-  if (!ntag) { return false }
+  if (!ntag) { 
+    console.log('LAUNCH: ntag is required')
+    return false
+  }
 
   const account = await getAccount(ntag)
 
-  if (!account) { return false }
-  if (!account.enabled) { return false }
+  if (!account) { 
+    console.log('LAUNCH: account not found')
+    return false
+  }
+  if (!account.enabled) { 
+    console.log('LAUNCH: account not enabled')
+    return false
+  }
   const verification_data = await balanceVerification(account.id)
-  if (!verification_data.is_verified) { return false }
+  if (!verification_data.is_verified) { 
+    console.log('LAUNCH: account bad balance verification')
+    return false
+  }
 
   return account
 }
