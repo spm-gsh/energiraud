@@ -2,6 +2,7 @@ import { json } from '@sveltejs/kit';
 import { getMachineById, updateMachine } from '$lib/models/machine';
 import { getAccountById } from '$lib/models/account';
 import { toggleOff } from '$lib/models/circuit_manager';
+import { checkKey } from '$lib/utils';
 
 export async function POST({ request }) {
   const { user_id, machine_id } = await request.json();
