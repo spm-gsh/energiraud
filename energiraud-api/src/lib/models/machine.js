@@ -53,7 +53,14 @@ async function getMachinesPaginated(page, take) {
 async function updateMachine(id, data) {
   const machine = await db.machine.update({
     where: { id },
-    data
+    data,
+    include: {
+      logs: {
+        include: {
+          account: true
+        }
+      }
+    } 
   });
   return machine;
 }
