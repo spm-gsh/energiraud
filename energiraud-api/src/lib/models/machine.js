@@ -7,21 +7,30 @@ async function getMachines() {
 
 async function getMachineFromLocation(location) {
   const washingMachine = await db.machine.findMany({
-    where: { location }
+    where: { location },
+    include: {
+      machineLogs: true
+    }
   });
   return washingMachine;
 }
 
 async function getMachineById(id) {
   const washingMachine = await db.machine.findUnique({
-    where: { id }
+    where: { id },
+    include: {
+      machineLogs: true
+    }
   });
   return washingMachine;
 }
 
 async function getMachineBySerialNumber(serialNumber) {  
   const washingMachine = await db.machine.findUnique({
-    where: { serial_number: serialNumber }
+    where: { serial_number: serialNumber },
+    include: {
+      machineLogs: true
+    }
   });
   return washingMachine;
 }
@@ -29,7 +38,10 @@ async function getMachineBySerialNumber(serialNumber) {
 async function getMachinesPaginated(page, take) {
   const washingMachines = await db.machine.findMany({
     skip: (page - 1) * take,
-    take
+    take,
+    include: {
+      machineLogs: true
+    }
   });
   return washingMachines;
 }
@@ -51,7 +63,7 @@ async function getMachineHistory(machine_id) {
   const machine = await db.machine.findUnique({
     where: { id: machine_id },
     include: {
-      transactions: true
+      machineLogs: true
     }
   });
   return machine;
