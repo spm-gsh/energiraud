@@ -130,7 +130,7 @@ async function balanceVerification(accountId) {
     throw new Error('Account not found');
   }
 
-  const calculatedBalance = parseFloat(account.transactions.reduce((sum, transaction) => sum + transaction.amount, 0)).toFixed(2);
+  let calculatedBalance = parseFloat(account.transactions.reduce((sum, transaction) => sum + transaction.amount, 0)).toFixed(2);
 
   account.balance = parseFloat(account.balance).toFixed(2)
   calculatedBalance = parseFloat(calculatedBalance).toFixed(2)
