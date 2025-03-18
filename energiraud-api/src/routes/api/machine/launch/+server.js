@@ -3,6 +3,7 @@ import { checkIsFloat, checkIsPositiveFloat, checkKey } from '$lib/utils';
 import { getAccount, updateAccount, balanceVerification } from '$lib/models/account';
 import { createTransaction } from '$lib/models/transactions';
 import { getMachineById, updateMachine } from '$lib/models/machine';
+import { createMachineLog } from '$lib/models/machinelog';
 
 /**
  * Check if the machine exists
