@@ -42,4 +42,28 @@ async function updateMachine(id, data) {
   return machine;
 }
 
-export { getMachines, getMachineById, getMachineBySerialNumber, getMachinesPaginated, getMachineFromLocation, updateMachine };
+/**
+ * Get machine history
+ * @param {string} machine_id - The id of the machine
+ * @returns {object} - The machine
+ */
+async function getMachineHistory(machine_id) {
+  const machine = await db.machine.findUnique({
+    where: { id: machine_id },
+    include: {
+      transactions: true
+    }
+  });
+  return machine;
+}
+
+
+export { 
+  getMachines, 
+  getMachineById, 
+  getMachineBySerialNumber, 
+  getMachinesPaginated, 
+  getMachineFromLocation, 
+  updateMachine,
+  getMachineHistory
+};

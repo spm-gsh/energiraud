@@ -41,7 +41,7 @@ async function checkAccount(ntag) {
     console.log('LAUNCH: account not found')
     return false
   }
-  if (!account.enabled) { 
+  if (!account.enabled) {
     console.log('LAUNCH: account not enabled')
     return false
   }
@@ -103,6 +103,9 @@ export async function POST({ request }) {
 
   // CREATE TRANSACTION
   await createTransaction(account.id, -cost, 'Utilisation ' + machine.name + ' (' + launch_time + 'h)')
+
+  // CREATE MACHINE LOG
+  await createMachineLog(machine.id, account.id)
 
   account = await updateAccount(ntag, account.balance - cost)
 
