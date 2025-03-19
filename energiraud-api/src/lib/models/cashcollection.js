@@ -11,13 +11,13 @@ async function createCashCollection(machineId, accountId) {
     throw new Error('Machine ID and Account ID are required');
   }
 
-  const cashCollect = await db.cashCollect.create({
+  const cashCollection = await db.cashCollection.create({
     data: {
       machineId,
       accountId
     }
   });
-  return cashCollect;
+  return cashCollection;
 }
 
 /**
@@ -30,10 +30,10 @@ async function getCashCollectionById(id) {
     throw new Error('ID is required');
   }
 
-  const cashCollect = await db.cashCollect.findUnique({
+  const cashCollection = await db.cashCollection.findUnique({
     where: { id }
   });
-  return cashCollect;
+  return cashCollection;
 }
 
 /**
@@ -47,11 +47,11 @@ async function getCashCollectionPaginated(page, take) {
     throw new Error('Page and take are required');
   }
 
-  const cashCollects = await db.cashCollect.findMany({
+  const cashCollections = await db.cashCollection.findMany({
     skip: (page - 1) * take,
     take
   });
-  return cashCollects;
+  return cashCollections;
 }
 
 /**
@@ -64,10 +64,10 @@ async function getCashCollectionByMachineId(machineId) {
     throw new Error('Machine ID is required');
   }
 
-  const cashCollects = await db.cashCollect.findMany({
+  const cashCollections = await db.cashCollection.findMany({
     where: { machineId }
   });
-  return cashCollects;
+  return cashCollections;
 }
 
 /**
@@ -80,10 +80,10 @@ async function getCashCollectionByAccountId(accountId) {
     throw new Error('Account ID is required');
   }
 
-  const cashCollects = await db.cashCollect.findMany({
+  const cashCollections = await db.cashCollection.findMany({
     where: { accountId }
   });
-  return cashCollects;
+  return cashCollections;
 }
 
 export {
