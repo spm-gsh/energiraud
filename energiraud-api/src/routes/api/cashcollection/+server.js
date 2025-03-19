@@ -2,9 +2,9 @@ import { json } from '@sveltejs/kit';
 import { checkKey } from '$lib/utils';
 import { getTransactionPaginated } from '$lib/models/transactions';
 import { checkIsPositiveInt } from '$lib/utils';
-import { getMachinesByLocation } from '$lib/models/machines';
-import { getAccountByNtag } from '$lib/models/accounts';
-import { createCashCollection } from '$lib/models/cashcollect';
+import { getMachinesByLocation } from '$lib/models/machine';
+import { getAccountByNtag } from '$lib/models/account';
+import { createCashCollection } from '$lib/models/cashcollection';
 
 export async function GET({ request, url }) {
   let page = url.searchParams.get('page') || 1
