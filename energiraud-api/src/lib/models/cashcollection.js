@@ -87,9 +87,9 @@ async function getCashCollectionByAccountId(accountId) {
 }
 
 export {
-  createCashCollect,
-  getCashCollectById,
-  getCashCollectsPaginated,
-  getCashCollectsByMachineId,
-  getCashCollectsByAccountId
+  createCashCollection,
+  getCashCollectionById,
+  getCashCollectionPaginated,
+  getCashCollectionByMachineId,
+  getCashCollectionByAccountId
 }
