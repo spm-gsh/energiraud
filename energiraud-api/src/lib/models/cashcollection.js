@@ -2,19 +2,20 @@ import { db } from '$lib/database';
 
 /**
  * Create a cash collect
- * @param {string} machineId - The id of the machine
+ * @param {string} location - The location of the cash collection
  * @param {string} accountId - The id of the account
- * @returns {object} - The created cash collect
+ * @returns {object} - The created cash collection
  */
-async function createCashCollection(machineId, accountId) {
-  if (!machineId || !accountId) {
-    throw new Error('Machine ID and Account ID are required');
+async function createCashCollection(location, accountId) {
+  if (!location || !accountId) {
+    throw new Error('Location and Account ID are required');
   }
 
   const cashCollection = await db.cashCollection.create({
     data: {
-      machineId,
-      accountId
+      location,
+      accountId,
+      amount: 10
     }
   });
   return cashCollection;
