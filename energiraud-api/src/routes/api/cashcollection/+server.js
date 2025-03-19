@@ -2,7 +2,7 @@ import { json } from '@sveltejs/kit';
 import { checkKey } from '$lib/utils';
 import { getTransactionPaginated } from '$lib/models/transactions';
 import { checkIsPositiveInt } from '$lib/utils';
-import { getMachinesFromLocation } from '$lib/models/machine';
+import { getMachineFromLocation } from '$lib/models/machine';
 import { getAccountByNtag } from '$lib/models/account';
 import { createCashCollection } from '$lib/models/cashcollection';
 
@@ -61,7 +61,7 @@ export async function POST({ request, url }) {
   }
 
   
-  const machines = await getMachinesFromLocation(location)
+  const machines = await getMachineFromLocation(location)
   if (!machines) {
     return json({ statusCode: 400, error: 'This location doesnt have a cash collection machine' }, { status: 400 })
   }
