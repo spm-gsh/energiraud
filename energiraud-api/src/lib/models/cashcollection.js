@@ -6,7 +6,7 @@ import { db } from '$lib/database';
  * @param {string} accountId - The id of the account
  * @returns {object} - The created cash collect
  */
-async function createCashCollect(machineId, accountId) {
+async function createCashCollection(machineId, accountId) {
   if (!machineId || !accountId) {
     throw new Error('Machine ID and Account ID are required');
   }
@@ -25,7 +25,7 @@ async function createCashCollect(machineId, accountId) {
  * @param {string} id - The id of the cash collect
  * @returns {object} - The cash collect
  */
-async function getCashCollectById(id) {
+async function getCashCollectionById(id) {
   if (!id) {
     throw new Error('ID is required');
   }
@@ -42,7 +42,7 @@ async function getCashCollectById(id) {
  * @param {number} take - Number of items per page
  * @returns {object[]} - Array of cash collects
  */
-async function getCashCollectsPaginated(page, take) {
+async function getCashCollectionPaginated(page, take) {
   if (!page || !take) {
     throw new Error('Page and take are required');
   }
@@ -59,7 +59,7 @@ async function getCashCollectsPaginated(page, take) {
  * @param {string} machineId - The id of the machine
  * @returns {object[]} - Array of cash collects
  */
-async function getCashCollectsByMachineId(machineId) {
+async function getCashCollectionByMachineId(machineId) {
   if (!machineId) {
     throw new Error('Machine ID is required');
   }
@@ -75,7 +75,7 @@ async function getCashCollectsByMachineId(machineId) {
  * @param {string} accountId - The id of the account
  * @returns {object[]} - Array of cash collects
  */
-async function getCashCollectsByAccountId(accountId) {
+async function getCashCollectionByAccountId(accountId) {
   if (!accountId) {
     throw new Error('Account ID is required');
   }
