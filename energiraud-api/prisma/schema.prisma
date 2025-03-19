@@ -27,6 +27,8 @@ model Account {
 
   transactions Transaction[]
   logs MachineLog[]
+  cashCollections CashCollection[]
+  cashDeposits CashDeposit[]
 }
 
 model Role {
@@ -87,4 +89,32 @@ model MachineLog {
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
+}
+
+model CashDeposit {
+  id String @id @default(uuid())
+
+  amount Float
+
+  accountId String
+  account Account @relation(fields: [accountId], references: [id])
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  location String
+}
+
+model CashCollection {
+  id String @id @default(uuid())
+
+  amount Float
+
+  accountId String
+  account Account @relation(fields: [accountId], references: [id])
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  location String
 }
