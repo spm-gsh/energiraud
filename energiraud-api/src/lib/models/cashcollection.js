@@ -115,7 +115,7 @@ async function getCurrentAmount(location) {
   });
 
   // Calculer le total des dépots
-  const totalAmount = cashDeposits.reduce((acc, curr) => acc + curr.amount, 0);
+  const totalAmount = cashDeposits.reduce((acc, curr) => acc + curr.amount, 0) || 0;
 
   return totalAmount;
 }
