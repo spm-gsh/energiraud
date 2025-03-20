@@ -102,7 +102,7 @@ async function getCurrentAmount(location) {
     orderBy: { created_at: 'desc' },
     take: 1
   });
-  let last_date = lastCashCollection[0].created_at || new Date('1970-01-01');
+  let last_date = lastCashCollection[0]?.created_at || new Date('1970-01-01');
 
   // Récupérer tous les dépots depuis la dernière collecte
   const cashDeposits = await db.cashDeposit.findMany({
