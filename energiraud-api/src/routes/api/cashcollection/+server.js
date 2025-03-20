@@ -1,10 +1,9 @@
 import { json } from '@sveltejs/kit';
 import { checkKey } from '$lib/utils';
-import { getTransactionPaginated } from '$lib/models/transactions';
+import { getCashCollectionPaginated } from '$lib/models/cashcollection';
 import { checkIsPositiveInt } from '$lib/utils';
 import { getMachineFromLocation } from '$lib/models/machine';
 import { getAccountByNtag } from '$lib/models/account';
-import { createCashCollection } from '$lib/models/cashcollection';
 
 export async function GET({ request, url }) {
   let page = url.searchParams.get('page') || 1
@@ -36,7 +35,7 @@ export async function GET({ request, url }) {
   }
 
   // GET ALL TRANSACTIONS
-  const transactions = await getTransactionPaginated(page, take)
+  const transactions = await getCashCollectionPaginated(page, take)
 
   // RETURN FINAL VALUES
   return json({
@@ -58,12 +57,6 @@ export async function POST({ request, url }) {
   // CHECK LOCATION
   if (!location) {
     return json({ statusCode: 400, error: 'Location is required' }, { status: 400 })
-  }
-
-  
-  const machines = await getMachineFromLocation(location)
-  if (!machines) {
-    return json({ statusCode: 400, error: 'This location doesnt have a cash collection machine' }, { status: 400 })
   }
 
   // CHECK NTAG
