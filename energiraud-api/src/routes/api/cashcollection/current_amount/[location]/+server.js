@@ -3,7 +3,7 @@ import { checkKey } from '$lib/utils';
 import { getCurrentAmount } from '$lib/models/cashcollection';
 
 export async function GET({ request, url }) {
-  let location = url.searchParams.get('location')
+  const location = params.location;
 
   // CHECK KEY
   const key = request.headers.get('Authorization')
