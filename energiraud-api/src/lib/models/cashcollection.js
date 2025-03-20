@@ -87,10 +87,45 @@ async function getCashCollectionByAccountId(accountId) {
   return cashCollections;
 }
 
+/**
+ * Obtenir le montant actuel
+ * @param {string} location - L'emplacement du montant actuel
+ * @returns {number} - Le montant actuel
+ */
+async function getCurrentAmount(location) {
+  if (!location) {
+    throw new Error('Location is required');
+  }
+  // Derniere collecte
+  const lastCashCollection = await db.cashCollection.findMany({
+    where: { location },
+    orderBy: { created_at: 'desc' },
+    take: 1
+  });
+  let last_date = lastCashCollection[0].created_at;
+
+  // Si aucune collecte
+  if (lastCashCollection.length === 0) {
+    last_date = new Date('1970-01-01');
+  }
+
+  // Récupérer tous les dépots depuis la dernière collecte
+  const cashDeposits = await db.cashDeposit.findMany({
+    where: { location, created_at: { gte: last_date } }
+  });
+
+  // Calculer le total des dépots
+  const totalAmount = cashDeposits.reduce((acc, curr) => acc + curr.amount, 0);
+
+  return totalAmount;
+}
+
+
 export {
   createCashCollection,
   getCashCollectionById,
   getCashCollectionPaginated,
   getCashCollectionByMachineId,
-  getCashCollectionByAccountId
+  getCashCollectionByAccountId,
+  getCurrentAmount
 }
