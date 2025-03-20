@@ -109,8 +109,13 @@ async function getCurrentAmount(location) {
     where: { location, created_at: { gte: last_date } }
   });
 
+  // S'il n'y a aucun cashDeposit, retourner 0
+  if (cashDeposits.length === 0) {
+    return 0;
+  }
+
   // Calculer le total des dépots
-  const totalAmount = cashDeposits.reduce((acc, curr) => acc + curr.amount, 0) || 0;
+  const totalAmount = cashDeposits.reduce((acc, curr) => acc + curr.amount, 0);
 
   return totalAmount;
 }
