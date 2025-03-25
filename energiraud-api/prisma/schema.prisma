@@ -25,6 +25,11 @@ model Account {
 
   enabled Boolean @default(true)
 
+  allowedLocations Location[] @relation("AllowedLocations")
+
+  mainLocationId String?
+  mainLocation Location? @relation("MainLocation", fields: [mainLocationId], references: [id])
+
   transactions Transaction[]
   logs MachineLog[]
   cashCollections CashCollection[]
@@ -66,7 +71,8 @@ model Machine {
   switch_ip String
   switch_port Int
 
-  location String
+  locationId String
+  location Location @relation(fields: [locationId], references: [id])
 
   enabled Boolean @default(true)
   status String
@@ -123,6 +129,10 @@ model Location {
   id String @id @default(uuid())
 
   name String
+
+  machines Machine[]
+  allowedForAccounts Account[] @relation("AllowedLocations")
+  mainForAccounts Account[] @relation("MainLocation")
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt

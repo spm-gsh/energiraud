@@ -59,4 +59,14 @@ function checkKey(key) {
   return bearer_token === PRIVATE_KEY;
 }
 
-export { checkIsFloat, checkIsPositiveFloat, checkIsNegativeFloat, checkIsPositiveInt, checkKey }
+/**
+ * Check if the location is valid
+ * @param {string} location 
+ * @returns {boolean} true if the location is valid, false otherwise
+ */
+function checkLocation(location, allowedLocations) {
+  return allowedLocations.includes(location);
+}
+
+
+export { checkIsFloat, checkIsPositiveFloat, checkIsNegativeFloat, checkIsPositiveInt, checkKey, checkLocation }

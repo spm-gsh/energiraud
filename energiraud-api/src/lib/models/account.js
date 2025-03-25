@@ -33,6 +33,8 @@ async function getAccountById(id) {
         take: 10
       },
       role: true,
+      allowedLocations: true,
+      mainLocation: true,
     },
   })
 
@@ -59,6 +61,8 @@ async function getAccountByNtag(ntag) {
         take: 10
       },
       role: true,
+      allowedLocations: true,
+      mainLocation: true,
     },
   })
 
@@ -107,6 +111,8 @@ async function getAccountsPaginated(page, take) {
     take,
     include: {
       role: true,
+      allowedLocations: true,
+      mainLocation: true,
     },
   })
   return accounts
@@ -123,6 +129,8 @@ async function balanceVerification(accountId) {
     include: {
       transactions: true,
       role: true,
+      allowedLocations: true,
+      mainLocation: true,
     },
   });
 
