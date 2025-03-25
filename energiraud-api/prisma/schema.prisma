@@ -71,8 +71,8 @@ model Machine {
   switch_ip String
   switch_port Int
 
-  locationId String
-  location Location @relation(fields: [locationId], references: [id])
+  locationId String?
+  location Location? @relation(fields: [locationId], references: [id])
 
   enabled Boolean @default(true)
   status String
