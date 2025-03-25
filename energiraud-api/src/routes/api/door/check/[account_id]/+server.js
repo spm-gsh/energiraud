@@ -27,7 +27,6 @@ export async function GET({ request, params }) {
 
   // CHECK LOCATION
   const userLocation = request.headers.get('X-User-Location');
-  console.log(userLocation);
   if (account.role.name === 'ADMIN' || account.role.name === 'SUPER_ADMIN') {
     return json({ statusCode: 200, data: account }, { status: 200 });
   }
