@@ -21,7 +21,7 @@ export async function GET({ request, params }) {
     return json({ statusCode: 404, error: 'Account not found' }, { status: 404 });
   }
 
-  if (!account.isActive) {
+  if (!account.enabled) {
     return json({ statusCode: 403, error: 'Account is not active' }, { status: 403 });
   }
 
