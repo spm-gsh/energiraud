@@ -64,8 +64,16 @@ function checkKey(key) {
  * @param {string} location 
  * @returns {boolean} true if the location is valid, false otherwise
  */
-function checkLocation(location, allowedLocations) {
-  return allowedLocations.includes(location);
+function checkLocation(location, account) {
+  if (account.mainLocationId === location) {
+    return true;
+  }
+
+  if (account.allowedLocations.some(loc => loc.name === location)) {
+    return true;
+  }
+
+  return false;
 }
 
 

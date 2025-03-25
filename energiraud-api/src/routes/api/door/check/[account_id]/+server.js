@@ -27,7 +27,8 @@ export async function GET({ request, params }) {
 
   // CHECK LOCATION
   const userLocation = request.headers.get('X-User-Location');
-  if (!checkLocation(userLocation, account.allowedLocations)) {
+  console.log(userLocation);
+  if (!checkLocation(userLocation, account)) {
     return json({ statusCode: 403, error: 'Location not allowed' }, { status: 403 });
   }
 
