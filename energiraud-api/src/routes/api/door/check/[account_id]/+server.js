@@ -3,7 +3,7 @@ import { checkKey, checkLocation, checkIsPositiveInt } from '$lib/utils';
 import { getAccountById, getAccountByNtag } from '$lib/models/account';
 
 export async function GET({ request, params }) {
-  const id = params.id;
+  const account_id = params.account_id;
 
   // CHECK KEY
   const key = request.headers.get('Authorization');
@@ -12,9 +12,9 @@ export async function GET({ request, params }) {
   }
 
   // GET ACCOUNT INFO
-  let account = await getAccountById(id);
+  let account = await getAccountById(account_id);
   if (!account) {
-    account = await getAccountByNtag(id);
+    account = await getAccountByNtag(account_id);
   }
 
   if (!account) {
