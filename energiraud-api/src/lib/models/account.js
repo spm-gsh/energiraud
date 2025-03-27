@@ -197,12 +197,12 @@ async function createAccount(name, ntag) {
 async function getAuthorizedAccounts(location) {
   const accounts = await db.account.findMany({
     where: { 
-      OR: {
-        allowedLocations: { some: { name: location } },
-        mainLocation: { name: location },
-        role: { name: 'ADMIN' },
-        role: { name: 'SUPER_ADMIN' },
-      }
+      OR: [
+        { allowedLocations: { some: { name: location } } },
+        { mainLocation: { name: location } },
+        { role: { name: 'ADMIN' } },
+        { role: { name: 'SUPER_ADMIN' } },
+      ]
     },
     select: {
       id: true,
