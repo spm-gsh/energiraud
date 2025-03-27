@@ -221,5 +221,6 @@ export {
   accoutIsEnabled, 
   balanceVerification, 
   getAccountByNtag,
-  createAccount
+  createAccount,
+  getAuthorizedAccounts
 }
