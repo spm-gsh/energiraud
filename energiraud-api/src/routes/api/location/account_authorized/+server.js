@@ -20,6 +20,6 @@ export async function GET({ request, params }) {
   // RETURN FINAL VALUES
   return json({
     statusCode: 200,
-    data: account,
+    data: authorizedAccounts,
   }, { status: 200 });
 }
