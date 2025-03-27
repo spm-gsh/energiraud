@@ -189,6 +189,30 @@ async function createAccount(name, ntag) {
   return account
 }
 
+/**
+ * Get authorized accounts
+ * @param {string} location 
+ * @returns {object[]}
+ */
+async function getAuthorizedAccounts(location) {
+  const accounts = await db.account.findMany({
+    where: { 
+      OR: {
+        allowedLocations: { some: { name: location } },
+        mainLocation: { name: location },
+        role: { name: 'ADMIN' },
+        role: { name: 'SUPER_ADMIN' },
+      }
+    },
+    select: {
+      id: true,
+      name: true,
+      ntag: true,
+    }
+  })
+  return accounts
+}
+
 export { 
   getAccount, 
   updateAccount, 
