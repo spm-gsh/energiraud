@@ -59,7 +59,7 @@
  */
 import { json } from '@sveltejs/kit';
 import { checkKey } from '$lib/utils';
-import { getTransactionsById } from '$lib/models/transactions';
+import { getTransactionById } from '$lib/models/transactions';
 
 export async function GET({ request, params }) {
   const id = params.id
@@ -71,7 +71,7 @@ export async function GET({ request, params }) {
   }
 
   // GET ALL TRANSACTIONS
-  const transactions = await getTransactionsById(id)
+  const transactions = await getTransactionById(id)
 
   // RETURN FINAL VALUES
   return json({

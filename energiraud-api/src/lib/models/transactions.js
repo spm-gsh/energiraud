@@ -41,7 +41,7 @@ async function getAllTransactions() {
  * @param {string} id 
  * @returns {object[]}
  */
-async function getTransactionsById(id) {
+async function getTransactionById(id) {
   const transactions = await db.transaction.findUnique({ where: { id } })
   return transactions
 }
@@ -74,4 +74,11 @@ async function createTransaction(accountId, amount, description) {
   return transaction
 }
 
-export { getTransactionsByAccountId, getTransactionsByAccountNtag, createTransaction, getTransactionPaginated, getTransactionsById, getAllTransactions }
+async function createTransactionFromSync(transactionId, accountId, amount, description, createdAt) {
+  const transaction = await db.transaction.create({
+    data: { id: transactionId, accountId, amount, description, created_at: createdAt }
+  })
+  return transaction
+}
+
+export { getTransactionsByAccountId, getTransactionsByAccountNtag, createTransaction, getTransactionPaginated, getTransactionById, getAllTransactions, createTransactionFromSync }

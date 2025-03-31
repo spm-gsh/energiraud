@@ -100,6 +100,20 @@ async function updateAccount(ntag, balance) {
 }
 
 /**
+ * Update account balance
+ * @param {string} id 
+ * @param {number} balance 
+ * @returns {object}
+ */
+async function updateAccountById(id, balance) {
+  const account = await db.account.update({
+    where: { id },
+    data: { balance }
+  })
+  return account
+}
+
+/**
  * Get accounts paginated
  * @param {number} page 
  * @param {number} take 
@@ -216,6 +230,7 @@ async function getAuthorizedAccounts(location) {
 export { 
   getAccount, 
   updateAccount, 
+  updateAccountById,
   getAccountsPaginated, 
   getAccountById, 
   accoutIsEnabled, 
