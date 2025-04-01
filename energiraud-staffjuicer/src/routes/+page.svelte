@@ -4,6 +4,8 @@
 	import BalanceValidity from './BalanceValidity.svelte';
 
 	let rfid_id = $state("");
+	let account_not_exist = $state(false);
+	let account_name = $state("");
 
 	let accountInfo = $state(null);
 	let rechargeAmount = $state(0);
@@ -12,50 +14,22 @@
 	let transactions = $state([])
 	let balanceValidity = $state(null);
 	let dash_message = $state("Lancez le scan pour accéder aux informations du compte.");
-	let ndef = $state(null);
-
-	let isListening = $state(false);
-	let ndefReader = $state(null);
-	let abortController = $state(null);
-
-	async function startListening() {
-		dash_message = "Scan en cours, veuillez approcher la carte";
-    if (!("NDEFReader" in window)) {
-      dash_message = "Votre navigateur ne prend pas en charge le NFC";
-      return;
-    }
-
-    try {
-			abortController = new AbortController();
-			abortController.signal.onabort = event => {
-				// Anything
-			};
-
-      ndefReader = new NDEFReader();
-      await ndefReader.scan({ signal: abortController.signal });
-      isListening = true;
-
-      ndefReader.onreading = async ({data, serialNumber}) => {
-        rfid_id = serialNumber;
-        await loadPage();
-				await stopListening();
-      };
-    } catch (error) {
-      dash_message = "Erreur lors de la lecture NFC: " + error;
-    }
-  }
-
-	async function stopListening() {
-		abortController.abort();
-		isListening = false;
-	}
 
 	/**
 	 * Load the page
 	 */
 	async function loadPage() {
-		await fetchAccountInfo();
-		await fetchBalanceValidity();
+		let response = await fetchAccountInfo()
+		if (!response) {
+			dash_message = "Aucune carte valide trouvée, créer un compte ?";
+			account_not_exist = true;
+		}
+
+		response = await fetchBalanceValidity()
+		if (!response) {
+			dash_message = "Aucune carte valide trouvée, créer un compte ?";
+			account_not_exist = true;
+		}
 	}
 
 	/**
@@ -73,11 +47,13 @@
 			if (response.ok) {
 				accountInfo = data.data;
 				transactions = accountInfo.transactions;
+				return true;
 			} else {
-				dash_message = "Aucun compte trouvé";
+				return false;
 			}
 		} catch (error) {
 			alert(error);
+			return false;
 		}	
 	}
 
@@ -95,11 +71,13 @@
 				const data = await response.json();
 				const balance_data = data.data;
 				balanceValidity = balance_data.is_verified;
+				return true;
 			} else {
-				dash_message = "Aucune carte valide trouvée";
+				return false;
 			}
 		} catch (error) {
 			alert(error);
+			return false;
 		}
 	}
 
@@ -111,7 +89,7 @@
 		success = null;
 		try {
 			if (rechargeAmount > 0) {	
-				const response = await fetch(`${PUBLIC_API_URL}/api/refil`, {
+				const response = await fetch(`${PUBLIC_API_URL}/api/refill`, {
 					method: "POST",
 					headers: {
 						"Content-Type": "application/json",
@@ -131,6 +109,29 @@
 					error = "Erreur lors du rechargement du compte";
 				}
 			}
+		} catch (error) {
+			alert(error);
+		}
+	}
+
+	/**
+	 * Handle the new account
+	 */
+	async function newAccount() {
+		try {
+			const response = await fetch(`${PUBLIC_API_URL}/api/accounts`, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+					"Authorization": `${PUBLIC_KEY}`
+				},
+				body: JSON.stringify({ 
+					ntag: rfid_id, 
+					name: account_name 
+				})
+			});
+			account_not_exist = false;
+			await loadPage();
 		} catch (error) {
 			alert(error);
 		}
@@ -225,6 +226,23 @@
 		border: 1px solid var(--primary-color);
 		border-radius: 4px;
 		font-size: 1rem;
+	}
+
+	.input-code {
+		margin: 1rem 0rem;
+		padding: 0.75rem;
+		border: 1px solid var(--primary-color);
+		border-radius: 4px;
+		font-size: 1rem;
+		width: calc(100% - 1.5rem); /* Ajustement pour compenser le padding */
+		text-align: center;
+		justify-content: center;
+		align-items: center;
+		box-sizing: border-box; /* Pour inclure padding et border dans width */
+	}
+
+	.input-code:focus {
+		outline: none;
 	}
 
 	.button {
@@ -406,9 +424,12 @@
 	<div class="card">
 		<h2 class="card-title">Dernières transactions</h2>
 		<div class="transaction-list">
-			{#each transactions as transaction}
-				<div class="transaction-item">
-					<div class="transaction-header">
+			{#if transactions.length === 0}
+				<p class="info-text">Aucune transaction trouvée</p>
+			{:else}
+				{#each transactions as transaction}
+					<div class="transaction-item">
+						<div class="transaction-header">
 						<span class="transaction-date">
 							{new Date(transaction.created_at).toLocaleDateString('fr-FR', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' })}
 						</span>
@@ -417,14 +438,16 @@
 						</span>
 					</div>
 					<p class="transaction-description">{transaction.description}</p>
-				</div>
-			{/each}
+					</div>
+				{/each}
+			{/if}
 		</div>
 	</div>
 	</div>
 	<button  class="end-button" onclick={() => {
 		rfid_id = ""; 
 		accountInfo = null;
+		account_not_exist = false;
 	}}>
 		J'ai terminé !
 	</button>
@@ -437,21 +460,11 @@
 		<div class="card">
 			<h2 class="card-title">StaffJuicer</h2>
 			<p class="info-text">{dash_message}</p>
-			{#if isListening}
-				<button class="button" onclick={
-					() => {
-						stopListening();
-					}
-				}>
-					Arrêter le scan
-				</button>
-			{:else}
-				<button class="button" onclick={
-					() => {
-						startListening();
-					}
-				}>
-					Scanner
+			<input type="text" bind:value={rfid_id} onkeydown={(e) => e.key === 'Enter' && loadPage()} class="input-code" placeholder="Numéro de compte">
+			{#if account_not_exist}
+				<input type="text" bind:value={account_name} class="input-code" placeholder="Nom du titulaire">	
+				<button class="button" onclick={newAccount}>
+					Créer un compte
 				</button>
 			{/if}
 		</div>
