@@ -57,8 +57,8 @@ async function getLocationPaginated(page, take) {
  * @returns {object[]} - Tableau de tous les emplacements
  */
 async function getAllLocations() {
-  const locations = await db.location.findMany();
-  return locations;
+  const all_locations = await db.location.findMany();
+  return all_locations;
 }
 
 /**
@@ -72,11 +72,11 @@ async function updateLocation(id, name) {
     throw new Error('ID and name are required');
   }
 
-  const location = await db.location.update({
+  const updated_location = await db.location.update({
     where: { id },
     data: { name }
   });
-  return location;
+  return updated_location;
 }
 
 /**
@@ -89,10 +89,10 @@ async function deleteLocation(id) {
     throw new Error('ID is required');
   }
 
-  const location = await db.location.delete({
+  const deleted_location = await db.location.delete({
     where: { id }
   });
-  return location;
+  return deleted_location;
 }
 
 export {

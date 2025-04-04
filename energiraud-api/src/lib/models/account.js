@@ -227,6 +227,29 @@ async function getAuthorizedAccounts(location) {
   return accounts
 }
 
+async function removeAllowedLocation(accountId, locationId) {
+  const account = await db.account.update({
+    where: { id: accountId },
+    data: { allowedLocations: { disconnect: { id: locationId } } }
+  })
+  return account
+}
+
+async function addAllowedLocation(accountId, locationId) {
+  const account = await db.account.update({
+    where: { id: accountId },
+    data: { allowedLocations: { connect: { id: locationId } } }
+  })
+  return account
+}
+
+async function getAccountByContainingName(name) {
+  const account = await db.account.findMany({
+    where: { name: { contains: name } }
+  })
+  return account
+}
+
 export { 
   getAccount, 
   updateAccount, 
@@ -237,5 +260,8 @@ export {
   balanceVerification, 
   getAccountByNtag,
   createAccount,
-  getAuthorizedAccounts
+  getAuthorizedAccounts,
+  removeAllowedLocation,
+  addAllowedLocation,
+  getAccountByContainingName
 }
